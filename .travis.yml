@@ -1,0 +1,10 @@
+language: go
+sudo: false
+go:
+- 1.3
+before_install:
+ - chmod +x test.sh
+script:
+  - ./test.sh
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t c08237a6-0b27-47fb-9f46-b7802fe2ac7b
