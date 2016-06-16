@@ -22,6 +22,10 @@ func (n *Network) GetDimensions() []int {
 	return res
 }
 
+func (n *Network) Predict(input []float64) []float64 {
+	return []float64{}
+}
+
 //NewNetwork creates a new Network by given dimensions
 func NewNetwork(dims []int) *Network {
 	n := &Network{}
