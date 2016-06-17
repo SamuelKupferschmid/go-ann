@@ -56,3 +56,13 @@ func TestSigmoidTest(t *testing.T) {
 	}
 
 }
+
+func TestNodesHasBias(t *testing.T) {
+	dim := []int{2, 2, 1}
+	n := NewNetwork(dim)
+	w := n.GetWeights()
+
+	if len(w[0][0]) != 3 {
+		t.Errorf("3 weights expected %d given", len(w[0][0]))
+	}
+}
