@@ -49,10 +49,25 @@ func (n *Network) GetWeights() [][][]float64 {
 	return n.weights
 }
 
+func (n *Network) Backpropagate(err []float64) {
+	lamb := 0.1
+
+	for i := len(n.weights) - 1; i > 0; i-- {
+		prev := make([]float64, len(n.weights[i]))
+
+		for j := 0; j < len(err); j++ {
+			for k := 0; k < len(prev); k++ {
+				n.weights[i][j][k] += lamb * err[j] * n.weights[i][j][k]
+			}
+		}
+
+		err = prev
+	}
+}
+
 //NewNetwork creates a new Network by given dimensions
 func NewNetwork(dims []int) *Network {
 	n := &Network{}
-	r := rand.New(rand.NewSource(672))
 
 	n.weights = make([][][]float64, len(dims)-1)
 	for i, val := range dims {
@@ -63,7 +78,7 @@ func NewNetwork(dims []int) *Network {
 			for j := 0; j < val; j++ {
 				n.weights[i-1][j] = make([]float64, prev+1) //+1 for bias
 				for k := 0; k <= prev; k++ {
-					n.weights[i-1][j][k] = r.Float64()
+					n.weights[i-1][j][k] = rand.Float64()
 				}
 			}
 		}

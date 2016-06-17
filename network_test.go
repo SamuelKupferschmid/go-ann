@@ -73,21 +73,30 @@ func TestNodesHasBias(t *testing.T) {
 	}
 }
 
+func TestOutputLayerHasNoBias(t *testing.T) {
+	n := NewNetwork([]int{1, 3, 2, 1})
+
+	if len(n.GetWeights()[2]) != 1 {
+		t.Error("dimension error")
+	}
+}
+
 func TestBackpropagateConverges(t *testing.T) {
-	/*
-		n := NewNetwork([]int{1, 2, 2, 1})
-		in := []float64{0.4}
-		target := []float64{0.7}
+	n := NewNetwork([]int{1, 2, 2, 1})
+	in := []float64{0.4}
+	target := []float64{0.7}
 
-		delta := math.MaxFloat64
+	delta := math.MaxFloat64
 
-		for i := 0; i < 100; i++ {
-			res := n.Predict(in)[0]
+	for i := 0; i < 100; i++ {
+		res := n.Predict(in)[0]
 
-			if math.Abs(res-target[0]) > delta {
-				t.Error("error grown while backpropagation")
-			}
+		if math.Abs(res-target[0]) >= delta {
+			t.Error("error not shrinken while backpropagation")
+			return
+		}
 
-			delta = math.Abs(res - target[0])
-		}*/
+		delta = math.Abs(res - target[0])
+		n.Backpropagate([]float64{target[0] - res})
+	}
 }
