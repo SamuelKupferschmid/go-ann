@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"math"
 	"math/rand"
 )
 
@@ -23,7 +23,25 @@ func (n *Network) GetDimensions() []int {
 }
 
 func (n *Network) Predict(input []float64) []float64 {
-	return []float64{}
+	var res []float64
+
+	for _, layer := range n.weights {
+		res = make([]float64, len(layer))
+		for i, node := range layer {
+			var sum = 0.0
+
+			for i, val := range node {
+				sum += val * input[i]
+			}
+			res[i] = sigmoid(sum)
+		}
+		input = res
+	}
+	return res
+}
+
+func sigmoid(val float64) float64 {
+	return 1 / (1 + math.Exp(-val))
 }
 
 //NewNetwork creates a new Network by given dimensions
@@ -45,8 +63,6 @@ func NewNetwork(dims []int) *Network {
 			}
 		}
 	}
-
-	fmt.Println(n.weights)
 
 	return n
 }
