@@ -72,3 +72,22 @@ func TestNodesHasBias(t *testing.T) {
 		t.Errorf("3 weights expected %d given", len(w[0][0]))
 	}
 }
+
+func TestBackpropagateConverges(t *testing.T) {
+	/*
+		n := NewNetwork([]int{1, 2, 2, 1})
+		in := []float64{0.4}
+		target := []float64{0.7}
+
+		delta := math.MaxFloat64
+
+		for i := 0; i < 100; i++ {
+			res := n.Predict(in)[0]
+
+			if math.Abs(res-target[0]) > delta {
+				t.Error("error grown while backpropagation")
+			}
+
+			delta = math.Abs(res - target[0])
+		}*/
+}
