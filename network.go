@@ -25,15 +25,13 @@ func (n *Network) GetDimensions() []int {
 //Predict predicts the outputs using the given input values and the weights
 func (n *Network) Predict(input []float64) []float64 {
 	var res []float64
-	input = append([]float64{1}, input...)
-
 	for _, layer := range n.weights {
 		res = make([]float64, len(layer))
 		for i, node := range layer {
-			var sum = 0.0
+			sum := node[0]
 
-			for i, val := range node {
-				sum += val * input[i]
+			for i := 1; i < len(node); i++ {
+				sum += node[i] * input[i-1]
 			}
 			res[i] = sigmoid(sum)
 		}

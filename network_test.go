@@ -29,6 +29,12 @@ func TestPredictDimension(t *testing.T) {
 	}
 }
 
+func TestDimension1221Bias(t *testing.T) {
+	n := NewNetwork([]int{1, 2, 2, 1})
+	in := []float64{0.2}
+	n.Predict(in)
+}
+
 func TestPredictIsSigmoid(t *testing.T) {
 	dim := []int{2, 1}
 	n := NewNetwork(dim)
